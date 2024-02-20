@@ -61,12 +61,11 @@
                 });
         };
         // --------------------- END OF STEP 1
-
         // --------------------- STEP 2
         const codeValue = document.getElementById("code");
         const getAccessToken = document.getElementById("getToken");
         const accessTokenElement = document.getElementById("accessToken");
-        const getToken =
+        const getTokenEndpoint =
             "https://js5c3egzf4.execute-api.us-east-1.amazonaws.com/dev/api/token/";
 
         getAccessToken.onclick = function () {
@@ -80,7 +79,7 @@
             }
 
             // Continue with the request to get the token
-            const getTokenRequest = getToken + "/" + encodeURIComponent(code);
+            const getTokenRequest = getTokenEndpoint + encodeURIComponent(code);
             fetch(getTokenRequest)
                 .then(function (response) {
                     return response.json();

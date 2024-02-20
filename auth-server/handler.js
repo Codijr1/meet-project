@@ -39,12 +39,12 @@ module.exports.getAccessToken = async (event) => {
   const code = decodeURIComponent(`${event.pathParameters.code}`);
 
   return new Promise((resolve, reject) => {
-
     oAuth2Client.getToken(code, (error, response) => {
       if (error) {
-        return reject(error);
+        reject(error); // Reject the promise if an error occurs
+      } else {
+        resolve(response);
       }
-      return resolve(response);
     });
   })
     .then((results) => {
@@ -59,9 +59,13 @@ module.exports.getAccessToken = async (event) => {
       };
     })
     .catch((error) => {
-      // Handle error
+      // Handle error and return response
       return {
         statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
         body: JSON.stringify(error),
       };
     });

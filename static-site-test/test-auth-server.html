@@ -61,6 +61,7 @@
                 });
         };
         // --------------------- END OF STEP 1
+
         // --------------------- STEP 2
         const codeValue = document.getElementById("code");
         const getAccessToken = document.getElementById("getToken");
@@ -69,13 +70,10 @@
             "https://js5c3egzf4.execute-api.us-east-1.amazonaws.com/dev/api/token/";
 
         getAccessToken.onclick = function () {
-            let code = codeValue.value.trim(); // Trim whitespace from the input
-
-            // Check if the token input field is empty
+            let code = codeValue.value.trim();
             if (code === "") {
-                // Display an error message or prevent the request
                 console.error("Token input field is empty. Please enter a token.");
-                return; // Exit the function without proceeding with the request
+                return;
             }
 
             // Continue with the request to get the token

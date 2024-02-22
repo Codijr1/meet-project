@@ -44,14 +44,21 @@ module.exports.getAccessToken = async (event) => {
   return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (error, response) => {
       if (error) {
+        // error log
+        console.error('Error exchanging authorization code for token:', error);
         reject(error);
       } else {
+        // response log
+        console.log('Token response:', response);
         resolve(response);
       }
     });
   })
     .then((results) => {
-      // Respond with OAuth token 
+      // success logged
+      console.log('Token successfully retrieved:', results);
+
+      // OAuth token response
       return {
         statusCode: 200,
         headers: {
@@ -62,7 +69,10 @@ module.exports.getAccessToken = async (event) => {
       };
     })
     .catch((error) => {
-      // Handle error and return response
+      // errors logged
+      console.error('Error retrieving token:', error);
+
+      // error handle/return
       return {
         statusCode: 500,
         headers: {
@@ -73,6 +83,8 @@ module.exports.getAccessToken = async (event) => {
       };
     });
 };
+
+
 module.exports.getCalendarEvents = async (event) => {
   return new Promise((resolve, reject) => {
     const access_token = event.queryStringParameters.access_token;

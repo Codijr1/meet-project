@@ -41,7 +41,7 @@ module.exports.getAccessToken = async (event) => {
   return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (error, response) => {
       if (error) {
-        reject(error); // Reject the promise if an error occurs
+        reject(error);
       } else {
         resolve(response);
       }
@@ -60,6 +60,48 @@ module.exports.getAccessToken = async (event) => {
     })
     .catch((error) => {
       // Handle error and return response
+      return {
+        statusCode: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
+        body: JSON.stringify(error),
+      };
+    });
+};
+module.exports.getCalendarEvents = async (event) => {
+  return new Promise((resolve, reject) => {
+    const access_token = event.queryStringParameters.access_token;
+    oAuth2Client.setCredentials({ access_token });
+
+    calendar.events.list(
+      {
+        calendarId: CALENDAR_ID,
+        auth: oAuth2Client,
+        timeMin: new Date().toISOString(),
+        singleEvents: true,
+        orderBy: "startTime",
+      },
+      (error, response) => {
+        if (error) {
+          reject(error); //reject
+        } else {
+          //resolve
+          resolve({
+            statusCode: 200,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true,
+            },
+            body: JSON.stringify({ events: response.data.items }),
+          });
+        }
+      }
+    );
+  })
+    //error catchinh
+    .catch((error) => {
       return {
         statusCode: 500,
         headers: {

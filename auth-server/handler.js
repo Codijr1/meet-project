@@ -14,13 +14,12 @@ const oAuth2Client = new google.auth.OAuth2(
   redirect_uris[0]
 );
 
+//authorization
 module.exports.getAuthURL = async () => {
-
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
   });
-
   return {
     statusCode: 200,
     headers: {
@@ -34,6 +33,7 @@ module.exports.getAuthURL = async () => {
 };
 
 
+//get token
 module.exports.getAccessToken = async (event) => {
   // Decode authorization code extracted from the URL query
   const code = decodeURIComponent(`${event.pathParameters.code}`);
@@ -84,7 +84,7 @@ module.exports.getAccessToken = async (event) => {
     });
 };
 
-
+//get events
 module.exports.getCalendarEvents = async (event) => {
   return new Promise((resolve, reject) => {
     const access_token = event.queryStringParameters.access_token;

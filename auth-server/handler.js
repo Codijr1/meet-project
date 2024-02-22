@@ -38,7 +38,7 @@ module.exports.getAuthURL = async () => {
 //get token
 module.exports.getAccessToken = async (event) => {
   // Decode authorization code extracted from the URL query
-  const code = decodeURIComponent(decodeURIComponent(event.pathParameters.code)); // Decode the code
+  const code = decodeURIComponent(event.pathParameters.code); // Decode the code
   console.log('Received authorization code:', code); // Log the received authorization code
 
   return new Promise((resolve, reject) => {

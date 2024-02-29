@@ -1,31 +1,99 @@
-// src/__tests__/CitySearch.test.js
+//src/__tests__/CitySearch.test.js
 
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CitySearch from '../components/CitySearch';
+import CitySearch from '../components/CitySearch.js';
+import App from '../components/App.js';
+import { extractLocations, getEvents } from '../api.js';
 
 describe('<CitySearch /> component', () => {
     let CitySearchComponent;
+
     beforeEach(() => {
-        CitySearchComponent = render(<CitySearch />);
+        CitySearchComponent = render(<CitySearch allLocations={[]} />);
+    })
+
+    test('suggestion list is hidden default', () => {
+        const suggestionList = CitySearchComponent.queryByRole('list');
+        expect(suggestionList).not.toBeInTheDocument();
     });
+    test('renders a suggestionList when city box is clicked', async () => {
+        const user = userEvent.setup();
+        const cityTextBox = CitySearchComponent.queryByRole('textbox');
+
+        await user.click(cityTextBox);
+        const suggestionList = CitySearchComponent.queryByRole('list');
+        expect(suggestionList).toBeInTheDocument();
+        expect(suggestionList).toHaveClass('suggestion');
+    })
     test('renders text input', () => {
         const cityTextBox = CitySearchComponent.queryByRole('textbox');
         expect(cityTextBox).toBeInTheDocument();
         expect(cityTextBox).toHaveClass('city');
     });
 
-    test('suggestions list is hidden by default', () => {
-        const suggestionList = CitySearchComponent.queryByRole('list');
-        expect(suggestionList).not.toBeInTheDocument();
+    test('updates suggestionList correctly when user types in textbox', async () => {
+        const user = userEvent.setup();
+        const allEvents = await getEvents();
+        const allLocations = extractLocations(allEvents);
+
+        CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+        // User types 'Berlin' in textbox
+        const cityTextBox = CitySearchComponent.queryByRole('textbox');
+        await user.type(cityTextBox, 'Berlin');
+
+        //extract suggestionList according to textbox value
+        const suggestions = allLocations ? allLocations.filter((location) => {
+            return location.toUpperCase().indexOf(cityTextBox.value.toUpperCase()) > -1;
+        }) : [];
+
+        // Get suggestionList returned from CitySearch component
+        const suggestionList = CitySearchComponent.queryAllByRole('listitem');
+
+        // Compare extracted suggestionList with the result from CitySearch Component 
+        expect(suggestionList).toHaveLength(suggestions.length + 1);
+        for (let i = 0; i < suggestions.length; i++) {
+            expect(suggestionList[i].textContent).toBe(suggestions[i]);
+        }
+
     });
 
-    test('renders a list of suggestions when city textbox gains focus', async () => {
+    test('renders suggestion text in the textbox after clicking suggestion', async () => {
         const user = userEvent.setup();
+        const allEvents = await getEvents();
+        const allLocations = extractLocations(allEvents);
+        CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => { }} />);
+
         const cityTextBox = CitySearchComponent.queryByRole('textbox');
-        await user.click(cityTextBox);
-        const suggestionList = CitySearchComponent.queryByRole('list');
-        expect(suggestionList).toBeInTheDocument();
-        expect(suggestionList).toHaveClass('suggestions');
+        await user.type(cityTextBox, 'Berlin');
+
+        // suggestion content for location will be 'Berlin, Germany'
+        const Berlinsuggestion = CitySearchComponent.queryAllByRole('listitem')[0];
+
+        await user.click(Berlinsuggestion);
+
+        expect(cityTextBox).toHaveValue(Berlinsuggestion.textContent);
+
+
     });
+
 });
+
+describe('<CitySearch/>, integration', () => {
+
+    test('renders suggestionList when app is rendered and user focus in textbox', async () => {
+        const user = userEvent.setup();
+        const appComponent = render(<App />);
+        const appDom = appComponent.container.firstChild;
+
+        const citySearchDom = appDom.querySelector('#city-search');
+        const textbox = within(citySearchDom).queryByRole('textbox');
+        await user.click(textbox);
+
+        const allEvents = await getEvents();
+        const allLocations = extractLocations(allEvents);
+
+        const suggestionList = within(citySearchDom).queryAllByRole('listitem');
+        expect(suggestionList.length).toBe(allLocations.length + 1);
+    });
+})

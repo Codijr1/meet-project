@@ -1,5 +1,5 @@
 // src/components/EventList.js
-import Event from "./Event";
+import Event from "./Event.js";
 
 const EventList = ({ events }) => {
     return (

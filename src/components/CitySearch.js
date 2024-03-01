@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const CitySearch = ({ allLocations, setCurrentCity }) => {
     const [showSuggestion, setShowSuggestion] = useState(false);
     const [query, setQuery] = useState('');
-    const [suggestions, setSuggaestions] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
 
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -11,7 +11,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
             return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
         }) : [];
         setQuery(value);
-        setSuggaestions(filteredLocations);
+        setSuggestions(filteredLocations);
     }
     const handleClick = (event) => {
         const value = event.target.textContent;
@@ -21,7 +21,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
     }
 
     useEffect(() => {
-        setSuggaestions(allLocations);
+        setSuggestions(allLocations);
     }, [`${allLocations}`]);
     return (
         <div id="city-search">

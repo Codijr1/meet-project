@@ -21,15 +21,14 @@ describe('<EventList /> component', () => {
 
 describe('<EventList />, integration', () => {
 
-    test('renders 32 events when app mounted and rendered', async () => {
-        const appComponent = render(<App />);
-        const appDom = appComponent.container.firstChild;
-        const eventListDom = appDom.querySelector('#event-list');
+    test('renders a list of 32 events when the app is mounted and rendered', async () => {
+        const AppComponent = render(<App />);
+        const AppDOM = AppComponent.container.firstChild;
+        const EventListDOM = AppDOM.querySelector('#event-list');
         await waitFor(() => {
-            const eventListItems = within(eventListDom).queryAllByRole('listitem');
-            expect(eventListItems.length).toBeGreaterThan(0);
-        })
+            const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+            expect(EventListItems.length).toBe(32);
+        });
+    });
 
-
-    })
 });

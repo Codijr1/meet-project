@@ -5,8 +5,6 @@ import CitySearch from './components/CitySearch.js';
 import NumberOfEvents from './components/NumberOfEvents.js';
 import EventList from './components/EventList.js';
 
-
-
 function App() {
   const [events, setEvents] = useState([]);
   const [noe, setNoe] = useState(32);

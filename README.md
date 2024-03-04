@@ -6,8 +6,8 @@ The Meet App is a progressive web application (PWA) developed using React and em
 ### Google Calendar API Integration:
 The Meet App seamlessly integrates with the Google Calendar API to retrieve forthcoming events. It employs serverless functions to facilitate access authorization for public calendar events. Upon entering key and secret credentials, users request an access token from the authorization server. Subsequently, upon consenting to access by logging into their Google account, users can view and interact with calendar events.
 
-#### Key Features:
-City-Based Event Filtering:
+### Key Features:
+#### City-Based Event Filtering:
 Given a user's interest in filtering events by city,
 When the user interacts with the app,
 Then the app should display a curated list of events taking place in the selected city.
@@ -27,7 +27,7 @@ Given the user was typing in the city textbox and the list of suggested cities i
 When the user selects a city from the list,
 Then the app should update to display upcoming events in the selected city.
 
-Event Details Toggle:
+#### Event Details Toggle:
 Given a user's desire to view or hide event details,
 When the user interacts with the app,
 Then the app should respond accordingly by showing or hiding event details.
@@ -47,7 +47,7 @@ Given there is an event with displayed details,
 When the user clicks on the event to hide details,
 Then the app should hide the details of the event.
 
-Custom Event Display Limit:
+#### Custom Event Display Limit:
 Given a user's desire to specify the number of events displayed,
 When the user interacts with the app,
 Then the app should respond by displaying the specified number of events.
@@ -62,7 +62,7 @@ Given the user has specified the number of events,
 When the user views the events section,
 Then the app should display exactly as many events as specified by the user.
 
-Offline Functionality:
+#### Offline Functionality:
 Given a user's desire to use the app offline,
 When the user interacts with the app while offline,
 Then the app should provide offline functionality.
@@ -77,19 +77,21 @@ Given the user is online,
 When the user chooses to download information for offline usage,
 Then the app should download and store the necessary data.
 
-Home Screen Shortcut:
+#### Home Screen Shortcut:
 Given a user's desire to add a shortcut for the app to the home screen,
 When the user interacts with the app,
 Then the app should enable the addition of a shortcut to the device's home screen.
+
 Scenario 1: Shortcut Addition
 Given the app is installed on the user's device,
 When the user adds an app shortcut to the home screen,
 Then the app shortcut should be visible on the home screen.
 
-Event Visualization Charts:
+#### Event Visualization Charts:
 Given a user's desire to view charts representing event details,
 When the user interacts with the app,
 Then the app should respond by displaying event visualization charts.
+
 Scenario 1: Chart Display
 Given the user is on the home screen,
 When the user clicks to view a chart of the events,

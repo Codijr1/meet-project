@@ -1,23 +1,29 @@
 import { loadFeature, defineFeature } from 'jest-cucumber';
+import { render } from '@testing-library/react';
+import App from '../App';
+
 
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
 defineFeature(feature, test => {
-    test('when user hasn’t searched for a city, show upcoming events from all cities.', ({ given, when, then }) => {
-        given('user hasn’t searched for any city', () => {
+    test('When user has not searched for a city, show upcoming events from all cities.', ({ given, when, then }) => {
+        given('user has not searched for any city', () => {
 
         });
 
         when('the user opens the app', () => {
-
+            let AppComponent;
+            when('the user opens the app', () => {
+                AppComponent = render(<App />);
+            });
         });
 
-        then('the user should see the list of upcoming events.', () => {
+        then('the user should see the list of all upcoming events.', () => {
 
         });
     });
 
-    test(`user should see a list of suggestions when they search for a city`, ({ given, when, then }) => {
+    test('User should see a list of suggestions when they search for a city.', ({ given, when, then }) => {
         given('the main page is open', () => {
 
         });
@@ -26,12 +32,12 @@ defineFeature(feature, test => {
 
         });
 
-        then('the user should receive a list of cities (suggestions) that match what they’ve typed', () => {
+        then('the user should recieve a list of cities (suggestions) that match what they have typed', () => {
 
         });
     });
 
-    test('user can select a city from the suggested list', ({ given, and, when, then }) => {
+    test('User can select a city from the suggested list.', ({ given, and, when, then }) => {
         given('user was typing “Berlin” in the city textbox', () => {
 
         });

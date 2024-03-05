@@ -42,7 +42,7 @@ defineFeature(feature, (test) => {
             const showDetailsButton = document.querySelector('.showDetailsButton');
             userEvent.click(showDetailsButton);
             await waitFor(() => {
-                eventDetailsVisible = document.querySelector('.details') !== null;
+                eventDetailsVisible = document.querySelector('.event p') !== null;
             });
         });
 

@@ -23,7 +23,7 @@ describe('show/hide event details', () => {
         expect(eventDetails).toBeNull();
     });
 
-    test('User can expand an event to see details', async () => {
+    test('User can expand an event to see its details', async () => {
         await page.click('.event .showDetailsButton');
         const eventDetails = await page.$('.event .details');
         expect(eventDetails).toBeDefined();

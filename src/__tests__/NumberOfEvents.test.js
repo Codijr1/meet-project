@@ -3,6 +3,7 @@ import NumberOfEvents from '../components/NumberOfEvents.js';
 
 describe('<NumberOfEvents /> component', () => {
     let NumberOfEventsComponent;
+
     beforeEach(() => {
         NumberOfEventsComponent = render(<NumberOfEvents />);
     });
@@ -12,7 +13,8 @@ describe('<NumberOfEvents /> component', () => {
     });
 
     test('default value is 32', () => {
-        expect(NumberOfEventsComponent.queryByRole('spinbutton')).toHaveValue('32');
+        const inputValue = NumberOfEventsComponent.queryByRole('spinbutton').value;
+        expect(String(inputValue)).toBe('32');
     });
 
 });

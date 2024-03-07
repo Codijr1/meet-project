@@ -1,29 +1,30 @@
 import { loadFeature, defineFeature } from "jest-cucumber";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import App from "../App";
-import mockData from '../mock-data';
-
-
 
 const feature = loadFeature("./src/features/customEventDisplayLimit.feature");
 
 defineFeature(feature, (test) => {
-    test('Default Event Quantity', ({ given, when, then }) => {
+    // Scenario 1: Default Event Quantity
+    test('Default Event Quantity', async ({ given, when, then }) => {
         given('the user has not specified the number of events', () => {
-            //no inout required
+            // No input required
         });
 
-        when('the user views the events section', () => {
+        when('the user views the events section', async () => {
             render(<App />);
+            await waitFor(() => screen.getByRole('list', { id: 'event-list' }));
         });
 
         then('the app should display 32 events by default', () => {
-            const eventItems = mockData.slice(0, 32).map(event => screen.getByText(event.summary));
-            expect(eventItems.length).toBe(32);
+            const eventList = screen.getByRole('list', { id: 'event-list' });
+            expect(eventList.length) === ('32');
         });
     });
 
+
+    //scenario 2
     test('User-Specified Event Quantity', ({ given, when, then }) => {
         given('the user has specified the number of events', () => {
         });

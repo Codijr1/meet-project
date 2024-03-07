@@ -1,4 +1,4 @@
-// src/components/EventList.js
+// EventList.js
 import Event from "./Event.js";
 
 const EventList = ({ events }) => {

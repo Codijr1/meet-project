@@ -5,6 +5,7 @@ describe('show/hide event details', () => {
     let page;
     beforeAll(async () => {
         browser = await puppeteer.launch({
+            executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
             headless: false,
             slowMo: 250,
             timeout: 0

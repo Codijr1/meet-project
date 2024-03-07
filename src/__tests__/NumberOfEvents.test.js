@@ -5,13 +5,14 @@ describe('<NumberOfEvents /> component', () => {
     let NumberOfEventsComponent;
     beforeEach(() => {
         NumberOfEventsComponent = render(<NumberOfEvents />);
-    })
-    test('has an element with "textbox" role', () => {
-        expect(NumberOfEventsComponent.queryByRole("textbox")).toBeInTheDocument();
+    });
+
+    test('has an element with "spinbutton" role', () => {
+        expect(NumberOfEventsComponent.queryByRole("spinbutton")).toBeInTheDocument();
     });
 
     test('default value is 32', () => {
-        expect(NumberOfEventsComponent.queryByRole('textbox')).toHaveValue('32');
+        expect(NumberOfEventsComponent.queryByRole('spinbutton')).toHaveValue('32');
     });
 
 });

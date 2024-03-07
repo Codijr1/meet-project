@@ -1,21 +1,31 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 
-//check for number of events
-const NumberOfEvents = () => {
-    const [eventNumber, setEventNumber] = useState('32');
+const NumberOfEvents = ({ setNoe }) => {
+    const [eventNumber, setEventNumber] = useState(32);
     const handleInputChange = (event) => {
         const value = event.target.value;
-        setEventNumber(value);
-    }
+        if (value === '') {
+            setEventNumber('');
+            setNoe(32);
+        } else {
+            const parsedValue = parseInt(value, 10);
+            setEventNumber(parsedValue);
+            setNoe(parsedValue);
+        }
+    };
+
     return (
         <div id="numberOfEvents">
             <input
-                type="text"
+                type="number"
                 value={eventNumber}
                 onChange={handleInputChange}
+                min="1"
+                max="32"
+                placeholder="#"
             />
         </div>
-    )
-}
+    );
+};
 
 export default NumberOfEvents;

@@ -23,12 +23,14 @@ export const getEvents = async () => {
 
     if (token) {
         removeQuery();
-        const url = "https://omwjf8y2b3.execute-api.us-east-1.amazonaws.com/dev/api/get-events" + "/" + token;
+        const url = `https://omwjf8y2b3.execute-api.us-east-1.amazonaws.com/dev/api/get-events/${token}`;
         const response = await fetch(url);
         const result = await response.json();
         if (result) {
             return result.events;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 };
 
@@ -79,7 +81,7 @@ const checkToken = async (accessToken) => {
 const getToken = async (code) => {
     const encodeCode = encodeURIComponent(code);
     const response = await fetch(
-        'https://omwjf8y2b3.execute-api.us-east-1.amazonaws.com/dev/api/token' + '/' + encodeCode
+        `https://omwjf8y2b3.execute-api.us-east-1.amazonaws.com/dev/api/token/${encodeCode}`
     );
     const { access_token } = await response.json();
     access_token && localStorage.setItem("access_token", access_token);

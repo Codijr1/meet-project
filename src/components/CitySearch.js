@@ -12,17 +12,20 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         }) : [];
         setQuery(value);
         setSuggestions(filteredLocations);
-    }
+    };
+
     const handleClick = (event) => {
         const value = event.target.textContent;
         setQuery(value);
         setShowSuggestion(false);
         setCurrentCity(value);
-    }
+    };
 
     useEffect(() => {
+        // Use allLocations directly as a dependency
         setSuggestions(allLocations);
-    }, [`${allLocations}`]);
+    }, [allLocations]);
+
     return (
         <div id="city-search">
             <input
@@ -42,7 +45,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
                 </li>
             </ul> : null}
         </div>
-    )
-}
+    );
+};
 
 export default CitySearch;

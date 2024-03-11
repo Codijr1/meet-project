@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+
 import * as atatus from 'atatus-spa';
 atatus.config('acaa81804351480f83dfa168972fde14').install();
 
@@ -18,5 +19,3 @@ root.render(
 serviceWorkerRegistration.unregister();
 
 reportWebVitals();
-
-atatus.notify(new Error('Test Atatus Setup'));

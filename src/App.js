@@ -18,7 +18,7 @@ function App() {
         currentCity === 'See all cities'
           ? allEvents
           : allEvents.filter((event) => event.location === currentCity);
-      setEvents(filteredEvents.slice(0, noe));
+      setEvents(filteredEvents ? filteredEvents.slice(0, noe) : []);
       setAllLocations(extractLocations(allEvents));
     };
 

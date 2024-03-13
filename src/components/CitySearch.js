@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const CitySearch = ({ allLocations, setCurrentCity }) => {
+const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
     const [showSuggestion, setShowSuggestion] = useState(false);
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -12,6 +12,14 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         }) : [];
         setQuery(value);
         setSuggestions(filteredLocations);
+
+        let infoText;
+        if (filteredLocations.length === 0) {
+            infoText = "City not found, examine spelling or try another"
+        } else {
+            infoText = ""
+        }
+        setInfoAlert(infoText);
     };
 
     const handleClick = (event) => {
@@ -19,10 +27,10 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         setQuery(value);
         setShowSuggestion(false);
         setCurrentCity(value);
+        setInfoAlert("")
     };
 
     useEffect(() => {
-        // Use allLocations directly as a dependency
         setSuggestions(allLocations);
     }, [allLocations]);
 

@@ -1,4 +1,5 @@
 import mockData from './mock-data.js';
+import NProgress from 'nprogress';
 
 /**
  *

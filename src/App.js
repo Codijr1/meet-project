@@ -7,22 +7,25 @@ import NumberOfEvents from './components/NumberOfEvents.js';
 import EventList from './components/EventList.js';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert.js';
 import CityEventsChart from './components/CityEventsChart.js';
+import EventGenresChart from './components/EventGenresChart.js';
 
 function App() {
   const [events, setEvents] = useState([]);
   const [noe, setNoe] = useState(32);
   const [allLocations, setAllLocations] = useState([]);
   const [currentCity, setCurrentCity] = useState('See all cities');
-  const [infoAlert, setInfoAlert] = useState("");
+  const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
-  const [warningAlert, setWarningAlert] = useState("");
+  const [warningAlert, setWarningAlert] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       if (navigator.onLine) {
         setWarningAlert('');
       } else {
-        setWarningAlert('You are currently offline, some features may be unavailable. Data will be loaded from local cache');
+        setWarningAlert(
+          'You are currently offline, some features may be unavailable. Data will be loaded from local cache'
+        );
       }
       const allEvents = await getEvents();
       const filteredEvents =
@@ -49,7 +52,10 @@ function App() {
         setInfoAlert={setInfoAlert}
       />
       <NumberOfEvents setNoe={setNoe} setErrorAlert={setErrorAlert} />
-      <CityEventsChart allLocations={allLocations} events={events} />
+      <div className="charts-container">
+        <CityEventsChart allLocations={allLocations} events={events} />
+        <EventGenresChart events={events} />
+      </div>
       <EventList events={events} />
     </div>
   );
